@@ -362,6 +362,9 @@
         <source src="Eid_Mubarak_Song_-_Islamic_Music_#ramadan_#eidmubarak_#islamicmusic(256k).mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Music Control Button -->
+    <button class="music-control" id="musicBtn" onclick="toggleMusic()">🔊</button>
+
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-moon">🌙</div>
@@ -392,7 +395,7 @@
         <!-- Sevaiyaan Marquee -->
     <div class="sevaiyaan-banner">
         <marquee behavior="alternate" direction="left" scrollamount="8">
-BY:- SAYYED SAHIL
+ BY:- Sayyed Sahil  
         </marquee>
     </div>
 
@@ -412,7 +415,7 @@ BY:- SAYYED SAHIL
             <div class="wish-box" onclick="celebrateWish(this)">
                 <div class="wish-icon-box"><i class="fas fa-gift"></i></div>
                 <h3>Eidi & Gifts</h3>
-                <p>🎁 Chhoton ko eidi, badon ko izat...</p>
+                <p>🎁 Chhoton ko eidi, badon ko izzat...</p>
                 <button class="btn-eid" onclick="event.stopPropagation(); showEidModal('eidi')">Eidi Mubarak</button>
             </div>
             <div class="wish-box" onclick="celebrateWish(this)">
@@ -575,6 +578,4 @@ BY:- SAYYED SAHIL
                 eidi: "fas fa-gift",
                 maafi: "fas fa-heart"
             };
-            document.getElementById('modalEidMessage').innerText = messages[type];
-            document.getElementById('modalIcon').className = icons[type];
-            document.getElementById('eid
+            document.getElementById('modalEidMessage').innerText = message
