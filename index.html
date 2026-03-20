@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-         <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌙✨ Eid ul Fitr Mubarak – Chand Raat ki Khushiyan</title>
-    <!-- Font Awesome 6 -->
+    <title>🌙 Eid Mubarak</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -40,8 +39,87 @@
             pointer-events: none;
         }
 
-        /* Main Card */
+        /* ========== CONFETTI CANVAS ========== */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ========== WELCOME SCREEN ========== */
+        .welcome-screen {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-moon {
+            font-size: 8rem;
+            color: #ffec9e;
+            filter: drop-shadow(0 0 30px #f9d458);
+            animation: moonPulse 2s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes moonPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .welcome-screen h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fcee9f, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 0 #0f3b57;
+        }
+
+        .welcome-screen p {
+            font-size: 1.5rem;
+            color: #d7ecff;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .enter-btn {
+            background: linear-gradient(145deg, #e9a23b, #f8b550);
+            border: none;
+            color: white;
+            padding: 20px 60px;
+            font-size: 1.8rem;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #9e651d, 0 0 30px rgba(233, 162, 59, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 0 #9e651d, 0 0 40px rgba(233, 162, 59, 0.7);
+        }
+
+        .enter-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #9e651d;
+        }
+
+        /* ========== EID CARD ========== */
         .eid-card {
+            display: none;
             max-width: 1200px;
             width: 100%;
             background: rgba(255, 255, 255, 0.96);
@@ -59,7 +137,6 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* Top Chand Raat Strip */
         .chand-strip {
             background: linear-gradient(90deg, #2d5f7e, #4a9fcf, #2d5f7e);
             padding: 18px 25px;
@@ -86,14 +163,12 @@
             100% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* Header - Chaand Mubarak */
         .header-eid {
             background: linear-gradient(145deg, #103a5c, #1e5782);
             padding: 40px 20px 30px;
             text-align: center;
             color: white;
             clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
-            position: relative;
         }
 
         .moon-phase {
@@ -133,15 +208,6 @@
             margin: 10px 0;
         }
 
-        .header-eid p {
-            font-size: 1.4rem;
-            color: #d7ecff;
-            font-style: italic;
-            max-width: 700px;
-            margin: 15px auto;
-        }
-
-        /* Sevaiyaan / Gift Section */
         .sevaiyaan-banner {
             background: #fef3d6;
             padding: 20px;
@@ -155,12 +221,6 @@
             font-weight: bold;
         }
 
-        .sevaiyaan-banner i {
-            color: #c28b3b;
-            margin: 0 10px;
-        }
-
-        /* Main Grid - 4 Wishes */
         .wishes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -187,15 +247,6 @@
             border-color: #e2a134;
         }
 
-        .wish-box::before {
-            content: "🌙";
-            position: absolute;
-            top: -15px; left: 20px;
-            font-size: 3rem;
-            opacity: 0.2;
-            transform: rotate(-15deg);
-        }
-
         .wish-icon-box {
             font-size: 3.5rem;
             background: #1f6e9c;
@@ -215,20 +266,6 @@
             border-radius: 60% 40% 60% 40%;
         }
 
-        .wish-box h3 {
-            font-size: 2.2rem;
-            color: #145a82;
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-
-        .wish-box p {
-            font-size: 1.15rem;
-            color: #1f4430;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
         .btn-eid {
             background: #e9a23b;
             border: none;
@@ -240,21 +277,8 @@
             box-shadow: 0 7px 0 #9e651d;
             transition: 0.15s;
             cursor: pointer;
-            border: 1px solid #ffd58c;
         }
 
-        .btn-eid:hover {
-            background: #f8b550;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 0 #9e651d;
-        }
-
-        .btn-eid:active {
-            transform: translateY(7px);
-            box-shadow: 0 2px 0 #9e651d;
-        }
-
-        /* Special Ramadan & Eid Message */
         .roza-khulsi {
             background: #0f3828;
             color: #fcf3cf;
@@ -265,35 +289,6 @@
             border: 4px solid #f6c358;
         }
 
-        .roza-khulsi i {
-            font-size: 4rem;
-            color: #fec960;
-            margin: 0 15px;
-        }
-
-        .roza-khulsi h2 {
-            font-size: 2.8rem;
-            font-family: 'Amiri', serif;
-            margin: 15px 0;
-        }
-
-        .roza-khulsi p {
-            font-size: 1.5rem;
-        }
-
-        .date-badge {
-            background: #deb887;
-            color: #1d3e2b;
-            padding: 15px 30px;
-            border-radius: 60px;
-            font-weight: bold;
-            font-size: 1.5rem;
-            display: inline-block;
-            margin-top: 15px;
-            box-shadow: inset 0 -4px 0 #936e2f;
-        }
-
-        /* Footer */
         .footer-eid {
             background: #12455f;
             color: #ffefcf;
@@ -302,25 +297,6 @@
             clip-path: polygon(50% 15%, 100% 0, 100% 100%, 0 100%, 0 0);
         }
 
-        .social-icons i {
-            font-size: 2.8rem;
-            margin: 0 18px;
-            color: #fad675;
-            transition: 0.2s;
-        }
-
-        .social-icons i:hover {
-            color: #fff2aa;
-            transform: scale(1.2) rotate(8deg);
-        }
-
-        .footer-eid p {
-            font-size: 1.2rem;
-            margin-top: 25px;
-            letter-spacing: 1px;
-        }
-
-        /* Modal Popup */
         .modal-eid {
             display: none;
             position: fixed;
@@ -340,7 +316,6 @@
             max-width: 450px;
             width: 90%;
             border: 8px solid #fcb42e;
-            box-shadow: 0 35px 70px #fbb53b;
             animation: popEid 0.5s;
         }
 
@@ -349,164 +324,257 @@
             100% { transform: scale(1) rotate(0); opacity: 1; }
         }
 
-        .modal-card i {
-            font-size: 6rem;
-            color: #e09d32;
-            margin-bottom: 15px;
-        }
-
-        .modal-card h2 {
-            font-size: 2.8rem;
-            color: #135e3b;
-        }
-
-        .modal-card p {
-            font-size: 1.6rem;
-            margin: 20px 0;
-            color: #3f2e0e;
-        }
-
-        .close-eid {
-            background: #1d7a5e;
-            border: none;
+        /* Music Control Button */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #e9a23b;
             color: white;
-            font-size: 1.7rem;
-            padding: 12px 40px;
-            border-radius: 50px;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 6px 0 #0b4634;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: none;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
 
-<div class="eid-card">
-    
-    <!-- Top Chaand Raat strip -->
-    <div class="chand-strip">
-        <i class="fas fa-moon"></i>
-        <span>🌙  CHAAND RAAT MUBARAK  •  EID UL FITR  •  1446  •  🌙</span>
-        <i class="fas fa-star"></i>
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- 🎵 AUDIO FILES -->
+    <!-- File 1: Celebration Sound (Wish pe play hoga) -->
+    <audio id="celebrationSound">
+        <source src="✨_Eid_Mubarak_2026_🌙___Eid_Status_🕌💖_🌟🎊__Eid_Mubarak_Special_Status_♥️🌹__Happy_Eid_‪@FanoosStudio‬(256k).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- File 2: Background Music (Enter ke baad loop mein) -->
+    <audio id="bgMusic" loop>
+        <source src="Eid_Mubarak_Song_-_Islamic_Music_#ramadan_#eidmubarak_#islamicmusic(256k).mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-moon">🌙</div>
+        <h1>Eid Mubarak</h1>
+        <p>Chaand Raat ki Khushiyan Aapke Liye...</p>
+        <button class="enter-btn" onclick="enterEid()">Enter ✨</button>
     </div>
 
-    <!-- Main Header with moon & lanterns -->
-    <div class="header-eid">
-        <div class="moon-phase">
+    <!-- Eid Card -->
+    <div class="eid-card" id="eidCard">
+        <div class="chand-strip">
             <i class="fas fa-moon"></i>
-            <i class="fas fa-cloud-moon"></i>
-            <i class="fas fa-star-and-crescent"></i>
-            <i class="fas fa-lantern"></i>
+            <span>🌙 CHAAND RAAT MUBARAK • EID UL FITR • 1446 • 🌙</span>
+            <i class="fas fa-star"></i>
         </div>
-        <h1>✨ EID UL FITR ✨</h1>
-        <h2>عید مبارك</h2>
-        <p>Ramadan ke roze, iftaari ki barkat, aur ab Eid ki khushiyan</p>
-    </div>
 
-    <!-- Sevaiyaan Marquee -->
+        <div class="header-eid">
+            <div class="moon-phase">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-cloud-moon"></i>
+                <i class="fas fa-star-and-crescent"></i>
+            </div>
+            <h1>✨ EID UL FITR ✨</h1>
+            <h2>عید مبارك</h2>
+            <p>Ramadan ke roze, iftaari ki barkat, aur ab Eid ki khushiyan</p>
+        </div>
+
+        <!-- Sevaiyaan Marquee -->
     <div class="sevaiyaan-banner">
         <marquee behavior="alternate" direction="left" scrollamount="8">
- Eid Ul Adha Mubarak! May Allah bless you and your family. - From Sayyed Sahil  
+BY:- SAYYED SAHIL
         </marquee>
     </div>
 
-    <!-- 4 Wishes Grid -->
-    <div class="wishes-grid">
-        <!-- 1. Roza Iftaar Wish -->
-        <div class="wish-box">
-            <div class="wish-icon-box"><i class="fas fa-hand-holding-heart"></i></div>
-            <h3>Roze & Iftaari </h3>
-            <p>🌙 Mahe Ramzaan ke roze, iftaari ki rahmatein. Allah sabke roze qabool kare.</p>
-            <button class="btn-eid" onclick="showEidModal('roza')">Roze Mubarak</button>
+        <div class="wishes-grid">
+            <div class="wish-box" onclick="celebrateWish(this)">
+                <div class="wish-icon-box"><i class="fas fa-hand-holding-heart"></i></div>
+                <h3>Roze & Iftaari</h3>
+                <p>🌙 Mahe Ramzaan ke roze, iftaari ki rahmatein...</p>
+                <button class="btn-eid" onclick="event.stopPropagation(); showEidModal('roza')">Roze Mubarak</button>
+            </div>
+            <div class="wish-box" onclick="celebrateWish(this)">
+                <div class="wish-icon-box"><i class="fas fa-users"></i></div>
+                <h3>Families</h3>
+                <p>🏡 Aapke family ko Eid Mubarak meri taraf se...</p>
+                <button class="btn-eid" onclick="event.stopPropagation(); showEidModal('family')">Family ko wish</button>
+            </div>
+            <div class="wish-box" onclick="celebrateWish(this)">
+                <div class="wish-icon-box"><i class="fas fa-gift"></i></div>
+                <h3>Eidi & Gifts</h3>
+                <p>🎁 Chhoton ko eidi, badon ko izat...</p>
+                <button class="btn-eid" onclick="event.stopPropagation(); showEidModal('eidi')">Eidi Mubarak</button>
+            </div>
+            <div class="wish-box" onclick="celebrateWish(this)">
+                <div class="wish-icon-box"><i class="fas fa-heart"></i></div>
+                <h3>Maafi & Mohabbat</h3>
+                <p>🤝 Dil mein safai, rishton mein mithaas...</p>
+                <button class="btn-eid" onclick="event.stopPropagation(); showEidModal('maafi')">Maafi ka paigham</button>
+            </div>
         </div>
-        <!-- 2. Family & Friends -->
-        <div class="wish-box">
-            <div class="wish-icon-box"><i class="fas fa-users"></i></div>
-            <h3>Families</h3>
-            <p>🏡 Aapke family ko Eid Mubarak meri taraf se. Sabke chehre khile rahein.</p>
-            <button class="btn-eid" onclick="showEidModal('family')">Family ko wish</button>
+
+        <div class="roza-khulsi">
+            <i class="fas fa-mosque"></i> <i class="fas fa-quran"></i>
+            <h2>رمضان كريم • عيد فطر مبارك</h2>
+            <p>"Roza rakha, khula iftaar, ab Eid ka din hai intezaar"</p>
+            <div class="date-badge">📅 1 Shawwal 1446</div>
         </div>
-        <!-- 3. Eid Gifts & Eidi -->
-        <div class="wish-box">
-            <div class="wish-icon-box"><i class="fas fa-gift"></i></div>
-            <h3>Eidi & Gifts</h3>
-            <p>🎁 Chhoton ko eidi, badon ko izzat. Allah sabko pur-sukoon zindagi de.</p>
-            <button class="btn-eid" onclick="showEidModal('eidi')">Eidi Mubarak</button>
-        </div>
-        <!-- 4. Maafi & Mohabbat -->
-        <div class="wish-box">
-            <div class="wish-icon-box"><i class="fas fa-heart"></i></div>
-            <h3>Maafi & Mohabbat</h3>
-            <p>🤝 Dil mein safai, rishton mein mithaas. Sabko Eid ul Fitr Mubarak!</p>
-            <button class="btn-eid" onclick="showEidModal('maafi')">Maafi ka paigham</button>
+
+        <div class="footer-eid">
+            <div>📞 +91 7507248688 | 📧 sayyedsahil9017@gmail.com</div>
+            <p>✨ Aapke tamam rishtedaar, dost, ahbaab ko Eid ul Fitr ki bohat bohat Mubarakbad ✨</p>
         </div>
     </div>
 
-    <!-- Special Ramadan & Fitr message -->
-    <div class="roza-khulsi">
-        <i class="fas fa-mosque"></i>   <i class="fas fa-quran"></i>   <i class="fas fa-dates"></i>
-        <h2>رمضان كريم • عيد فطر مبارك</h2>
-        <p>"Roza rakha, khula iftaar, ab Eid ka din hai intezaar"</p>
-        <div class="date-badge">
-            <i class="fas fa-calendar-alt"></i> 1 Shawwal 1446 
+    <!-- Modal -->
+    <div id="eidModal" class="modal-eid" onclick="closeEidModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <i class="fas fa-moon" id="modalIcon"></i>
+            <h2>Eid Mubarak!</h2>
+            <p id="modalEidMessage">Taqabbal Allahu minna wa minkum</p>
+            <button class="btn-eid" onclick="closeEidModal()">JazakAllah ✨</button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer-eid">
-        <div class="social-icons">
-            <i class="fab ">📞</i>  +91 7507248688 <br>
-            <i class="fas ">📧</i> sayyedsahil9017@gmail.com
-        </div>
-        <p>✨  Aapke tamam rishtedaar, dost, ahbaab ko Eid ul Fitr ki bohat bohat Mubarakbad  ✨</p>
-        <p style="font-size: 1rem;">—  Khushiyon bhara din, maafi aur mohabbat ka din  —</p>
-    </div>
-</div>
+    <script>
+        // Confetti Setup
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-<!-- Modal Popup -->
-<div id="eidModal" class="modal-eid">
-    <div class="modal-card">
-        <i class="fas fa-moon" id="modalIcon"></i>
-        <h2>Eid Mubarak!</h2>
-        <p id="modalEidMessage">Taqabbal Allahu minna wa minkum</p>
-        <button class="close-eid" onclick="closeEidModal()">JazakAllah ✨</button>
-    </div>
-</div>
+        let confetti = [];
+        let isCelebrating = false;
+        const colors = ['#f9d458', '#ffec9e', '#e9a23b', '#1f6e9c', '#fff', '#f8b550'];
 
-<script>
-    function showEidModal(type) {
-        let message = "";
-        let icon = document.getElementById('modalIcon');
-        
-        if (type === 'roza') {
-            message = "🌙 Allah aapke saare roze qabool kare. Roza, iftaar aur tarawih ki barkat aapke saath ho. Eid Mubarak!";
-            icon.className = "fas fa-hand-holding-heart";
-        } else if (type === 'family') {
-            message = "🏡 Aapke walidain, bhai-behn, biwi/bache sabko meri taraf se Eid ki Mubarakbad. Khandan khush rahe, salamti rahe.";
-            icon.className = "fas fa-users";
-        } else if (type === 'eidi') {
-            message = "💰 Eidi mili? 😄 Allah aapko duniya aur aakhirat ki daulat de. Chhoton ko eidi, badon ko salam. Eid Mubarak!";
-            icon.className = "fas fa-gift";
-        } else if (type === 'maafi') {
-            message = "🕊️ Agar kisi se koi khata hui to maaf karna. Dil saaf rakhna, Allah Dil saaf rakhne walon se mohabbat karta hai. Eid Mubarak!";
-            icon.className = "fas fa-heart";
+        class ConfettiPiece {
+            constructor(x, y, burst = false) {
+                this.x = x || Math.random() * canvas.width;
+                this.y = y || -10;
+                this.size = Math.random() * 10 + 5;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.speedY = burst ? Math.random() * -10 - 5 : Math.random() * 3 + 2;
+                this.speedX = burst ? (Math.random() - 0.5) * 10 : (Math.random() - 0.5) * 2;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
+                this.gravity = 0.1;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotation += this.rotationSpeed;
+                this.speedY += this.gravity;
+                if (this.speedY > 0) this.speedX *= 0.99;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                ctx.restore();
+            }
         }
 
-        document.getElementById('modalEidMessage').innerText = message;
-        document.getElementById('eidModal').style.display = "flex";
-    }
-
-    function closeEidModal() {
-        document.getElementById('eidModal').style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        let modal = document.getElementById('eidModal');
-        if (event.target === modal) {
-            modal.style.display = "none";
+        function startConfetti() {
+            isCelebrating = true;
+            for (let i = 0; i < 100; i++) {
+                confetti.push(new ConfettiPiece(canvas.width / 2, canvas.height / 2, true));
+            }
+            for (let i = 0; i < 50; i++) confetti.push(new ConfettiPiece());
+            animateConfetti();
         }
-    }
-</script>
 
-</body>
-</html>
+        function burstConfetti(x, y) {
+            for (let i = 0; i < 30; i++) confetti.push(new ConfettiPiece(x, y, true));
+        }
+
+        function animateConfetti() {
+            if (!isCelebrating && confetti.length === 0) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confetti = confetti.filter(piece => {
+                piece.update();
+                piece.draw();
+                return piece.y < canvas.height + 50;
+            });
+            if (isCelebrating && Math.random() < 0.1) confetti.push(new ConfettiPiece());
+            requestAnimationFrame(animateConfetti);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Audio Elements
+        const bgMusic = document.getElementById('bgMusic');
+        const celebrationSound = document.getElementById('celebrationSound');
+        const musicBtn = document.getElementById('musicBtn');
+        let isMusicPlaying = true;
+
+        // Enter function - BG Music starts here
+        function enterEid() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('eidCard').style.display = 'block';
+            musicBtn.style.display = 'block';
+            
+            // 🎵 Play Background Music (Loop mein)
+            bgMusic.volume = 0.3; // 30% volume - soft background
+            bgMusic.play().catch(e => console.log('Music play blocked:', e));
+            
+            startConfetti();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Celebration on wish box click - Celebration sound plays here
+        function celebrateWish(element) {
+            const rect = element.getBoundingClientRect();
+            burstConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            
+            // 🎊 Play Celebration Sound (One time)
+            celebrationSound.volume = 0.7; // 70% volume - louder
+            celebrationSound.currentTime = 0; // Restart from beginning
+            celebrationSound.play().catch(e => console.log('Sound play blocked:', e));
+        }
+
+        // Toggle Music Button
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = '🔇';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play();
+                musicBtn.innerHTML = '🔊';
+                isMusicPlaying = true;
+            }
+        }
+
+        function showEidModal(type) {
+            const messages = {
+                roza: "🌙 Allah aapke saare roze qabool kare. Eid Mubarak!",
+                family: "🏡 Aapke pure khandan ko Eid ki Mubarakbad!",
+                eidi: "💰 Allah aapko duniya aur aakhirat ki daulat de!",
+                maafi: "🕊️ Dil saaf rakhna, Allah saaf dil walon se mohabbat karta hai!"
+            };
+            const icons = {
+                roza: "fas fa-hand-holding-heart",
+                family: "fas fa-users",
+                eidi: "fas fa-gift",
+                maafi: "fas fa-heart"
+            };
+            document.getElementById('modalEidMessage').innerText = messages[type];
+            document.getElementById('modalIcon').className = icons[type];
+            document.getElementById('eid
